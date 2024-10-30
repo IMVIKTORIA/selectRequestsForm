@@ -2,18 +2,18 @@ import React, { useEffect, useState } from 'react'
 import CustomList from '../../../UIKit/CustomList/CustomList'
 import { ItemData, ListColumnData } from '../../../UIKit/CustomList/CustomListTypes'
 import Scripts from '../../shared/utils/clientScripts'
-import { SelectTaskFilters, selectTaskContext } from '../../stores/SelectTaskContext'
-import { SelectTaskData } from '../../shared/types'
+import { SelectRequestFilters, selectRequestContext } from '../../stores/SelectRequestContext'
+import { SelectRequestData } from '../../shared/types'
 import utils from '../../shared/utils/utils'
 
-interface SelectTaskListProps {
+interface SelectRequestListProps {
 	/** Ширина списка */
 	width: number
 }
 
 /** Фильтры формы отбра задач */
-export default function SelectTaskList({ width }: SelectTaskListProps) {
-	const { data, setValue } = selectTaskContext.useContext()
+export default function SelectRequestList({ width }: SelectRequestListProps) {
+	const { data, setValue } = selectRequestContext.useContext()
 
 	/** Установка обработчика нажатия на поиск */
 	const setSearchHandler = (callback: () => void) => {
@@ -106,8 +106,8 @@ export default function SelectTaskList({ width }: SelectTaskListProps) {
 			isLink: true,
 		}),
 		new ListColumnData({
-			name: data.filters.status3l.fieldName,
-			code: data.filters.status3l.fieldCode,
+			name: data.filters.insuredStatus.fieldName,
+			code: data.filters.insuredStatus.fieldCode,
 			fr: 1,
 			isSortable: searchAccess,
 		}),
@@ -126,8 +126,8 @@ export default function SelectTaskList({ width }: SelectTaskListProps) {
 	]
 
 	return (
-		<div className="select-task-list">
-			<CustomList<SelectTaskFilters, SelectTaskData>
+		<div className="select-request-list">
+			<CustomList<SelectRequestFilters, SelectRequestData>
 				setSearchHandler={setSearchHandler}
 				searchData={data.filters}
 				columnsSettings={columns}

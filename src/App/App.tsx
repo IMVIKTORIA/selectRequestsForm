@@ -1,8 +1,8 @@
 import React from 'react';
-import SelectTaskForm from './components/SelectTaskForm/SelectTaskForm';
+import SelectRequestForm from './components/SelectRequestForm/SelectRequestForm';
 
 export default function App() {
 	return (
-		<SelectTaskForm />
+		<SelectRequestForm />
 	)
 }
