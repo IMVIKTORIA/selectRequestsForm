@@ -6,20 +6,27 @@ export interface IInputData<DataType = any> {
 }
 
 export class SelectRequestData {
-  // Номер задачи - строчька
+  /** Номер обращения */
   number?: ItemData;
-  // Вид задачи - поиск по названию
+  /** Статус */
   status?: ItemData;
-  // Вид задачи - поиск по названию
+  /** Тема обращения */
+  appeal?: ItemDataString;
+  /** Канал */
   channel?: ItemData;
+  /** Канал(Ручной ввод) */
   channelManual?: ItemData;
-  // Дата создания - дата с по
+  /** Дата создания */
   createdAt?: ItemDataString;
+  /** Обратившийся */
   contragent?: ItemData;
-  appeal?: ItemData;
+  /** Застрахованный */
   appealSubject?: ItemData;
+  /** Статус ЗЛ */
   insuredStatus?: ItemData;
+  /** Полис */
   policy?: ItemData;
+  /** Продукт */
   product?: ItemData;
 
   constructor({

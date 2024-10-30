@@ -50,11 +50,11 @@ export default function SelectRequestList({ width }: SelectRequestListProps) {
 
 	// Вычислить количество отобранных элементов
 	useEffect(() => {
-		Scripts.getTasksCount(data.filters).then((count) => setValue('elementsCount', count))
+		Scripts.getRequestsCount(data.filters).then((count) => setValue('elementsCount', count))
 	}, [])
 
 	/** Доступ к поиску */
-	const searchAccess = Scripts.getSelectTaskAccessSettings().searchButton == 2
+	const searchAccess = Scripts.getSelectRequestAccessSettings().searchButton == 2
 
 	/** Колонки списка */
 	const columns = [

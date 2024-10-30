@@ -48,7 +48,7 @@ async function getAppeals(page: number, sortData?: SortData, searchData?: Select
 }
 
 /** Получение количества задач по фильтрам */
-async function getTasksCount(searchData?: SelectRequestFilters): Promise<number> {
+async function getRequestsCount(searchData?: SelectRequestFilters): Promise<number> {
   return 0;
 }
 
@@ -123,9 +123,9 @@ interface ISelectTaskAccessSettings {
 }
 
 /** Получить настройки доступа формы отбора задач */
-function getSelectTaskAccessSettings(): ISelectTaskAccessSettings {
+function getSelectRequestAccessSettings(): ISelectTaskAccessSettings {
   return {
-    searchButton: 1,
+    searchButton: 2,
     appendResponsible: 2,
   };
 }
@@ -142,13 +142,13 @@ function getSelectInsuredLink(): string {
 
 export default {
   getAppeals,
-  getTasksCount,
+  getRequestsCount,
   getStatuses,
   getInsuredStatuses,
   getChannels,
   getRequestIdByTaskId,
   getRequestLink,
-  getSelectTaskAccessSettings,
+  getSelectRequestAccessSettings,
   getSelectRequestLink,
   getSelectInsuredLink,
 };

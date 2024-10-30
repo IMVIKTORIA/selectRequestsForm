@@ -50,7 +50,7 @@ export default function SelectRequestFiltersForm({ }: SelectRequestFiltersProps)
 	/** Обработчик нажатия на кнопку поиска */
 	const searchHandler = async () => {
 		// Количество отобранных элементов
-		const elementsCount = await Scripts.getTasksCount(data.filters)
+		const elementsCount = await Scripts.getRequestsCount(data.filters)
 		setValue('elementsCount', elementsCount)
 
 		// Поиск
@@ -82,7 +82,7 @@ export default function SelectRequestFiltersForm({ }: SelectRequestFiltersProps)
 		<FiltersWrapper
 			searchHandler={searchHandler}
 			resetHandler={resetFilters}
-			isSearchButtonDisabled={Scripts.getSelectTaskAccessSettings().searchButton < 2}
+			isSearchButtonDisabled={Scripts.getSelectRequestAccessSettings().searchButton < 2}
 		>
 			<FilterItemString
 				setIsOpenInit={setIsOpenFactory(data.filters.number.fieldCode)}

@@ -65,9 +65,9 @@ export class SelectRequestFiltersStates {
 
 /** Значения фильтров формы отбора задач */
 export class SelectRequestFilters implements IFiltersData {
-  /** Номер задачи */
+  /** Номер обращения */
   number: StringFilter;
-  /** Вид задачи */
+  /** Статус */
   status: ListFilter;
   /** Тема обращения */
   appeal: StringFilter;
