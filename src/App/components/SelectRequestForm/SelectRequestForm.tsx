@@ -1,19 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { selectTaskContext, SelectTaskData } from '../../stores/SelectTaskContext';
+import { selectRequestContext, SelectRequestData } from '../../stores/SelectRequestContext';
 import Header from '../Header/Header';
-import SelectTaskFiltersForm from '../SelectTaskFiltersForm/SelectTaskFiltersForm';
-import SelectTaskList from '../SelectTaskList/SelectTaskList';
+import SelectRequestFiltersForm from '../SelectRequestFiltersForm/SelectRequestFiltersForm';
+import SelectRequestList from '../SelectRequestList/SelectRequestList';
 import { getDataFromDraft } from '../../shared/utils/utils';
 
-/** Форма отбора задач */
-export default function SelectTaskForm() {
-	const [data, setValue] = selectTaskContext.useState()
+/** Форма отбора обращений */
+export default function SelectRequestForm() {
+	const [data, setValue] = selectRequestContext.useState()
 	const contentWrapperRef = useRef<HTMLDivElement>(null)
 
 	// Подгрузка данных
 	React.useLayoutEffect(() => {
 		// Данные формы из черновика
-		let draftData: SelectTaskData;
+		let draftData: SelectRequestData;
 		try {
 			draftData = getDataFromDraft()
 		} catch (e) {
@@ -51,22 +51,22 @@ export default function SelectTaskForm() {
 	}
 
 	return (
-		<selectTaskContext.Provider value={{ data, setValue }}>
-			<div className="select-task-form">
-				<div className="select-task-form__header">
-					<Header clickFilterHandler={toggleShowFilters} elementsCount={data.elementsCount} title='Форма отбора задач' />
+		<selectRequestContext.Provider value={{ data, setValue }}>
+			<div className="select-request-form">
+				<div className="select-request-form__header">
+					<Header clickFilterHandler={toggleShowFilters} elementsCount={data.elementsCount} title='Форма отбора обращений' />
 				</div>
-				<div className="select-task-form__content" ref={contentWrapperRef}>
-					<div className={`select-task-form__filters${!isShowFilters ? " select-task-form__filters_hidden" : ""}`}>
-						<SelectTaskFiltersForm />
+				<div className="select-request-form__content" ref={contentWrapperRef}>
+					<div className={`select-request-form__filters${!isShowFilters ? " select-request-form__filters_hidden" : ""}`}>
+						<SelectRequestFiltersForm />
 					</div>
-					<div className="select-task-form__list">
+					<div className="select-request-form__list">
 						<div>
-							<SelectTaskList width={listWidth} />
+							<SelectRequestList width={listWidth} />
 						</div>
 					</div>
 				</div>
 			</div>
-		</selectTaskContext.Provider >
+		</selectRequestContext.Provider >
 	)
 }

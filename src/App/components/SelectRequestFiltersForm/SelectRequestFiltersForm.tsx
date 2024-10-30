@@ -1,19 +1,34 @@
 import React, { useEffect, useState } from 'react'
 import FiltersWrapper from '../../../UIKit/Filters/FiltersWrapper/FiltersWrapper'
 import FilterItemString from '../../../UIKit/Filters/FilterItems/FilterItemString/FilterItemString'
-import { selectTaskContext } from '../../stores/SelectTaskContext'
-import { IFilter } from '../../../UIKit/Filters/FiltersTypes'
+import { selectRequestContext } from '../../stores/SelectRequestContext'
+import { IFilter, ObjectItem } from '../../../UIKit/Filters/FiltersTypes'
 import FilterItemDates from '../../../UIKit/Filters/FilterItems/FilterItemDates/FilterItemDates'
 import FilterItemSearch from '../../../UIKit/Filters/FilterItems/FilterItemSearch/FilterItemSearch'
+import FilterItemCategory from '../../../UIKit/Filters/FilterItems/FilterItemCategory/FilterItemCategory'
 import Scripts from '../../shared/utils/clientScripts'
 import { saveState } from '../../shared/utils/utils'
 
-interface SelectTaskFiltersProps {}
+interface SelectRequestFiltersProps { }
 
-/** Фильтры формы отбра задач */
-export default function SelectTaskFiltersForm({}: SelectTaskFiltersProps) {
-	const { data, setValue } = selectTaskContext.useContext()
+/** Фильтры формы отбора обращений */
+export default function SelectRequestFiltersForm({ }: SelectRequestFiltersProps) {
+	const { data, setValue } = selectRequestContext.useContext()
 	const filters = data.filters
+
+	/** Статусы */
+	const [statuses, setStatuses] = useState<ObjectItem[]>([]);
+	/** Каналы */
+	const [channels, setChannels] = useState<ObjectItem[]>([]);
+	/** Статусы ЗЛ */
+	const [insuredStatuses, setInsuredStatuses] = useState<ObjectItem[]>([]);
+
+	/** Получение вариантов категорий */
+	React.useLayoutEffect(() => {
+		Scripts.getStatuses().then(items => setStatuses(items))
+		Scripts.getChannels().then(items => setChannels(items))
+		Scripts.getInsuredStatuses().then(items => setInsuredStatuses(items))
+	}, [])
 
 	/** Изменение значения конкретного фильтра */
 	const changeFilterValue = (key: string, value: IFilter) => {
@@ -35,7 +50,7 @@ export default function SelectTaskFiltersForm({}: SelectTaskFiltersProps) {
 	/** Обработчик нажатия на кнопку поиска */
 	const searchHandler = async () => {
 		// Количество отобранных элементов
-		const elementsCount = await Scripts.getTasksCount(data.filters)
+		const elementsCount = await Scripts.getRequestsCount(data.filters)
 		setValue('elementsCount', elementsCount)
 
 		// Поиск
@@ -67,7 +82,7 @@ export default function SelectTaskFiltersForm({}: SelectTaskFiltersProps) {
 		<FiltersWrapper
 			searchHandler={searchHandler}
 			resetHandler={resetFilters}
-			isSearchButtonDisabled={Scripts.getSelectTaskAccessSettings().searchButton < 2}
+			isSearchButtonDisabled={Scripts.getSelectRequestAccessSettings().searchButton < 2}
 		>
 			<FilterItemString
 				setIsOpenInit={setIsOpenFactory(data.filters.number.fieldCode)}
@@ -76,20 +91,20 @@ export default function SelectTaskFiltersForm({}: SelectTaskFiltersProps) {
 				filterValue={data.filters.number}
 				setFilterValue={changeValueConstructor(data.filters.number.fieldCode)}
 			/>
-			<FilterItemSearch
+			<FilterItemCategory
 				setIsOpenInit={setIsOpenFactory(data.filters.status.fieldCode)}
 				isOpenInit={data.filterStates.status}
 				title={data.filters.status.fieldName}
 				filterValue={data.filters.status}
-				getDataHandler={Scripts.getStatus}
+				variants={statuses}
 				setFilterValue={changeValueConstructor(data.filters.status.fieldCode)}
 			/>
-			<FilterItemSearch
+			<FilterItemCategory
 				setIsOpenInit={setIsOpenFactory(data.filters.channel.fieldCode)}
 				isOpenInit={data.filterStates.channel}
 				title={data.filters.channel.fieldName}
 				filterValue={data.filters.channel}
-				getDataHandler={Scripts.getChannel}
+				variants={channels}
 				setFilterValue={changeValueConstructor(data.filters.channel.fieldCode)}
 			/>
 			<FilterItemString
@@ -120,13 +135,13 @@ export default function SelectTaskFiltersForm({}: SelectTaskFiltersProps) {
 				filterValue={data.filters.appealSubject}
 				setFilterValue={changeValueConstructor(data.filters.appealSubject.fieldCode)}
 			/>
-			<FilterItemSearch
-				setIsOpenInit={setIsOpenFactory(data.filters.status3l.fieldCode)}
-				isOpenInit={data.filterStates.status3l}
-				title={data.filters.status3l.fieldName}
-				filterValue={data.filters.status3l}
-				getDataHandler={Scripts.getStatus3l}
-				setFilterValue={changeValueConstructor(data.filters.status3l.fieldCode)}
+			<FilterItemCategory
+				setIsOpenInit={setIsOpenFactory(data.filters.insuredStatus.fieldCode)}
+				isOpenInit={data.filterStates.insuredStatus}
+				title={data.filters.insuredStatus.fieldName}
+				filterValue={data.filters.insuredStatus}
+				variants={insuredStatuses}
+				setFilterValue={changeValueConstructor(data.filters.insuredStatus.fieldCode)}
 			/>
 			<FilterItemString
 				setIsOpenInit={setIsOpenFactory(data.filters.policy.fieldCode)}

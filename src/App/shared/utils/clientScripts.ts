@@ -1,172 +1,154 @@
-import {
-	FetchData,
-	ItemData,
-	ItemDataString,
-	SortData,
-} from '../../../UIKit/CustomList/CustomListTypes'
-import { ObjectItem } from '../../../UIKit/Filters/FiltersTypes'
-import { FetchInputData } from '../../../UIKit/shared/types/types'
-import { SelectTaskFilters } from '../../stores/SelectTaskContext'
-import { SelectTaskData } from '../types'
+import { FetchData, ItemData, ItemDataString, SortData } from "../../../UIKit/CustomList/CustomListTypes";
+import { ObjectItem } from "../../../UIKit/Filters/FiltersTypes";
+import { FetchInputData } from "../../../UIKit/shared/types/types";
+import { SelectRequestFilters } from "../../stores/SelectRequestContext";
+import { SelectRequestData } from "../types";
 
 /** Заглушка ожидания ответа сервера */
 function randomDelay() {
-	const delay = Math.random() * 1000
-	return new Promise((resolve) => {
-		setTimeout(resolve, delay)
-	})
+  const delay = Math.random() * 1000;
+  return new Promise((resolve) => {
+    setTimeout(resolve, delay);
+  });
 }
 
 /** Получение списка обращений */
-async function getAppeals(
-	page: number,
-	sortData?: SortData,
-	searchData?: SelectTaskFilters
-): Promise<FetchData<SelectTaskData>> {
-	await randomDelay()
+async function getAppeals(page: number, sortData?: SortData, searchData?: SelectRequestFilters): Promise<FetchData<SelectRequestData>> {
+  await randomDelay();
 
-	console.log({
-		page,
-		sortData,
-		searchData,
-	})
+  console.log({
+    page,
+    sortData,
+    searchData,
+  });
 
-	const mockData = {
-		number: new ItemData({ value: 'RQ00000004/24', info: 'test' }),
-		status: new ItemData({ value: 'Новое', info: 'test' }),
-		channel: new ItemData({ value: 'Телефон', info: 'test' }),
-		createdAt: new ItemDataString('06.12.2023 12:22'),
-		contragent: new ItemData({ value: 'Иванов Иван Иванович', info: 'test' }),
-		appeal: new ItemData({ value: 'Тестирование', info: 'test' }),
-		appealSubject: new ItemData({ value: 'Петров Петр Петрович', info: 'test' }),
-		status3l: new ItemData({ value: 'VIP', info: 'test' }),
-		policy: new ItemData({ value: 'Тест', info: 'test' }),
-		product: new ItemData({ value: 'Сбереги здоровье', info: 'test' }),
-	}
-	return {
-		items: Array(5)
-			.fill(0)
-			.map((data, index) => {
-				return {
-					id: String(index),
-					data: new SelectTaskData(mockData),
-				}
-			}),
-		hasMore: true,
-	}
+  const mockData: SelectRequestData = {
+    number: new ItemData({ value: "RQ00000004/24", info: "test" }),
+    status: new ItemData({ value: "Новое", info: "test" }),
+    channel: new ItemData({ value: "Телефон", info: "test" }),
+    createdAt: new ItemDataString("06.12.2023 12:22"),
+    contragent: new ItemData({ value: "Иванов Иван Иванович", info: "test" }),
+    appeal: new ItemData({ value: "Тестирование", info: "test" }),
+    appealSubject: new ItemData({ value: "Петров Петр Петрович", info: "test" }),
+    insuredStatus: new ItemData({ value: "VIP", info: "test" }),
+    policy: new ItemData({ value: "Тест", info: "test" }),
+    product: new ItemData({ value: "Сбереги здоровье", info: "test" }),
+  };
+  return {
+    items: Array(5)
+      .fill(0)
+      .map((data, index) => {
+        return {
+          id: String(index),
+          data: new SelectRequestData(mockData),
+        };
+      }),
+    hasMore: true,
+  };
 }
 
 /** Получение количества задач по фильтрам */
-async function getTasksCount(searchData?: SelectTaskFilters): Promise<number> {
-	return 0
+async function getRequestsCount(searchData?: SelectRequestFilters): Promise<number> {
+  return 0;
 }
 
 /** Получение статусов обращений */
-async function getStatus(page: number, query?: string | undefined): Promise<FetchInputData> {
-	await randomDelay()
+async function getStatuses(): Promise<ObjectItem[]> {
+  await randomDelay();
 
-	const sorts: ObjectItem[] = [
-		new ObjectItem({ code: 'test', value: 'Открыто' }),
-		new ObjectItem({ code: 'test1', value: 'В работе' }),
-		new ObjectItem({ code: 'test2', value: 'Уточнение запроса' }),
-		new ObjectItem({ code: 'test3', value: 'В ожидании' }),
-		new ObjectItem({ code: 'test4', value: 'Закрыто' }),
-	]
+  const statuses: ObjectItem[] = [
+    new ObjectItem({ code: "test", value: "Открыто" }),
+    new ObjectItem({ code: "test1", value: "В работе" }),
+    new ObjectItem({ code: "test2", value: "Уточнение запроса" }),
+    new ObjectItem({ code: "test3", value: "В ожидании" }),
+    new ObjectItem({ code: "test4", value: "Закрыто" }),
+  ];
 
-	return {
-		items: sorts,
-		hasMore: true,
-	}
+  return statuses;
 }
 
 /** Получение статусов 3Л */
-async function getStatus3l(page: number, query?: string | undefined): Promise<FetchInputData> {
-	await randomDelay()
+async function getInsuredStatuses(): Promise<ObjectItem[]> {
+  await randomDelay();
 
-	const sorts: ObjectItem[] = [
-		new ObjectItem({ code: 'test', value: 'VIP' }),
-		new ObjectItem({ code: 'test1', value: 'Проблемный' }),
-		new ObjectItem({ code: 'test2', value: 'Сотрудник Сбер' }),
-	]
+  const insuredStatuses: ObjectItem[] = [
+    new ObjectItem({ code: "test", value: "VIP" }),
+    new ObjectItem({ code: "test1", value: "Проблемный" }),
+    new ObjectItem({ code: "test2", value: "Сотрудник Сбер" }),
+  ];
 
-	return {
-		items: sorts,
-		hasMore: true,
-	}
+  return insuredStatuses;
 }
 
 /** Получение каналов */
-async function getChannel(page: number, query?: string | undefined): Promise<FetchInputData> {
-	await randomDelay()
+async function getChannels(): Promise<ObjectItem[]> {
+  await randomDelay();
 
-	const sorts: ObjectItem[] = [
-		new ObjectItem({ code: 'test', value: 'Email' }),
-		new ObjectItem({ code: 'test1', value: 'СМС' }),
-		new ObjectItem({ code: 'test2', value: 'Телефон' }),
-		new ObjectItem({ code: 'test3', value: 'Ручной ввод' }),
-		new ObjectItem({ code: 'test4', value: 'email(GMAIL)' }),
-		new ObjectItem({ code: 'test5', value: 'email(Все линии)' }),
-	]
+  const channels: ObjectItem[] = [
+    new ObjectItem({ code: "test", value: "Email" }),
+    new ObjectItem({ code: "test1", value: "СМС" }),
+    new ObjectItem({ code: "test2", value: "Телефон" }),
+    new ObjectItem({ code: "test3", value: "Ручной ввод" }),
+    new ObjectItem({ code: "test4", value: "email(GMAIL)" }),
+    new ObjectItem({ code: "test5", value: "email(Все линии)" }),
+  ];
 
-	return {
-		items: sorts,
-		hasMore: true,
-	}
+  return channels;
 }
 
 /** Получение id обращения по id задачи */
 async function getRequestIdByTaskId(taskId: string): Promise<string> {
-	return 'test'
+  return "test";
 }
 
 /** Получение ссылки для перехода на страницу обращения */
 async function getRequestLink(): Promise<string> {
-	return '#test'
+  return "#test";
 }
 
 /** Уровни доступа */
 enum AccessLevel {
-	/** Нет доступа, даже не видим */
-	noAccess = 0,
-	/** Только видим, не можем писать или менять */
-	readOnly = 1,
-	/** Видим, читаем и можем писать или нажимать на кнопку/ссылку */
-	writeRead = 2,
+  /** Нет доступа, даже не видим */
+  noAccess = 0,
+  /** Только видим, не можем писать или менять */
+  readOnly = 1,
+  /** Видим, читаем и можем писать или нажимать на кнопку/ссылку */
+  writeRead = 2,
 }
 
 /** Настройки доступа формы отбора задач */
 interface ISelectTaskAccessSettings {
-	searchButton: AccessLevel
-	appendResponsible: AccessLevel
+  searchButton: AccessLevel;
+  appendResponsible: AccessLevel;
 }
 
 /** Получить настройки доступа формы отбора задач */
-function getSelectTaskAccessSettings(): ISelectTaskAccessSettings {
-	return {
-		'searchButton': 1,
-		'appendResponsible': 2,
-	}
+function getSelectRequestAccessSettings(): ISelectTaskAccessSettings {
+  return {
+    searchButton: 2,
+    appendResponsible: 2,
+  };
 }
 
 /** Получить ссылку формы отбора обращений */
 function getSelectRequestLink(): string {
-	return '#selectRequestTest'
+  return "#selectRequestTest";
 }
 
 /** Получить ссылку формы отбора застрахованных */
 function getSelectInsuredLink(): string {
-	return '#selectRequestTest'
+  return "#selectRequestTest";
 }
 
 export default {
-	getAppeals,
-	getTasksCount,
-	getStatus,
-	getStatus3l,
-	getChannel,
-	getRequestIdByTaskId,
-	getRequestLink,
-	getSelectTaskAccessSettings,
-	getSelectRequestLink,
-	getSelectInsuredLink,
-}
+  getAppeals,
+  getRequestsCount,
+  getStatuses,
+  getInsuredStatuses,
+  getChannels,
+  getRequestIdByTaskId,
+  getRequestLink,
+  getSelectRequestAccessSettings,
+  getSelectRequestLink,
+  getSelectInsuredLink,
+};

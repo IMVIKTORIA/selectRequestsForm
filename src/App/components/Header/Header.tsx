@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, useState } from 'react'
 import icons from '../../shared/icons'
 import FilterButton from '../../../UIKit/Filters/FilterButton/FilterButton'
-import { selectTaskContext } from '../../stores/SelectTaskContext'
+import { selectRequestContext } from '../../stores/SelectRequestContext'
 
 interface HeaderProps {
 	/** Заголовок */
@@ -19,13 +19,13 @@ function Header({
 	clickFilterHandler,
 	children,
 }: PropsWithChildren<HeaderProps>) {
-	const { data, setValue } = selectTaskContext.useContext()
+	const { data, setValue } = selectRequestContext.useContext()
 	/** Проверка имеются ли активные фильтры */
 	const checkHasActiveFilters = (): boolean => {
 		// Поиск по категориям
 		if (data.filters.status.values.length) return true
 		if (data.filters.channel.values.length) return true
-		if (data.filters.status3l.values.length) return true
+		if (data.filters.insuredStatus.values.length) return true
 
 		// Строковый поиск
 		if (data.filters.number.value) return true
