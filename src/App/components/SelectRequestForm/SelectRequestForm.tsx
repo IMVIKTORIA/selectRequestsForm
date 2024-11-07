@@ -4,6 +4,7 @@ import Header from '../Header/Header';
 import SelectRequestFiltersForm from '../SelectRequestFiltersForm/SelectRequestFiltersForm';
 import SelectRequestList from '../SelectRequestList/SelectRequestList';
 import { getDataFromDraft } from '../../shared/utils/utils';
+import Scripts from "../../shared/utils/clientScripts";
 
 /** Форма отбора обращений */
 export default function SelectRequestForm() {
@@ -49,6 +50,14 @@ export default function SelectRequestForm() {
 		const width = contentWrapperRef.current?.getBoundingClientRect().width ?? 0;
 		setListWidth(width)
 	}
+
+	  //Инициализация
+	useEffect(() => {
+		const initialize = async () => {
+		  await Scripts.OnInit();
+		};
+		initialize();
+	}, []);
 
 	return (
 		<selectRequestContext.Provider value={{ data, setValue }}>
