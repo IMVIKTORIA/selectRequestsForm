@@ -1,4 +1,9 @@
-import { FetchData, ItemData, ItemDataString, SortData } from "../../../UIKit/CustomList/CustomListTypes";
+import {
+  FetchData,
+  ItemData,
+  ItemDataString,
+  SortData,
+} from "../../../UIKit/CustomList/CustomListTypes";
 import { ObjectItem } from "../../../UIKit/Filters/FiltersTypes";
 import { FetchInputData } from "../../../UIKit/shared/types/types";
 import { SelectRequestFilters } from "../../stores/SelectRequestContext";
@@ -13,7 +18,11 @@ function randomDelay() {
 }
 
 /** Получение списка обращений */
-async function getAppeals(page: number, sortData?: SortData, searchData?: SelectRequestFilters): Promise<FetchData<SelectRequestData>> {
+async function getAppeals(
+  page: number,
+  sortData?: SortData,
+  searchData?: SelectRequestFilters
+): Promise<FetchData<SelectRequestData>> {
   await randomDelay();
 
   console.log({
@@ -29,7 +38,10 @@ async function getAppeals(page: number, sortData?: SortData, searchData?: Select
     createdAt: new ItemDataString("06.12.2023 12:22"),
     contragent: new ItemData({ value: "Иванов Иван Иванович", info: "test" }),
     appeal: new ItemData({ value: "Тестирование", info: "test" }),
-    appealSubject: new ItemData({ value: "Петров Петр Петрович", info: "test" }),
+    appealSubject: new ItemData({
+      value: "Петров Петр Петрович",
+      info: "test",
+    }),
     insuredStatus: new ItemData({ value: "VIP", info: "test" }),
     policy: new ItemData({ value: "Тест", info: "test" }),
     product: new ItemData({ value: "Сбереги здоровье", info: "test" }),
@@ -48,7 +60,9 @@ async function getAppeals(page: number, sortData?: SortData, searchData?: Select
 }
 
 /** Получение количества задач по фильтрам */
-async function getRequestsCount(searchData?: SelectRequestFilters): Promise<number> {
+async function getRequestsCount(
+  searchData?: SelectRequestFilters
+): Promise<number> {
   return 0;
 }
 
@@ -140,7 +154,9 @@ function getSelectInsuredLink(): string {
   return "#selectRequestTest";
 }
 
-async function OnInit(): Promise<void> {}
+async function OnInit(): Promise<void> {
+  await randomDelay();
+}
 
 export default {
   getAppeals,
