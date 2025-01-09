@@ -187,7 +187,11 @@ export default function SelectRequestForm() {
               </div>
               <div className="select-request-form__list">
                 <div>
-                  <SelectRequestList width={listWidth} />
+                  <SelectRequestList
+                    width={listWidth}
+                    isMultipleSelect={isMultipleSelect}
+                    isSelectable={isSelectable}
+                  />
                 </div>
               </div>
             </div>
