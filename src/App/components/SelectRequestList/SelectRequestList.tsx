@@ -55,15 +55,21 @@ export default function SelectRequestList({
     utils.redirectSPA(link);
   };
 
-  /** Обработчик нажатия на номер обращения */
-  const onClickRequest = async (props: ItemData) => {
-    const requestId = props.info;
-    if (!requestId) return;
-    // Установка обращения
-    utils.setRequest(requestId);
+  /** Обработчик нажатия на номер задачи */
+  const onClickFullname = async (props: ItemData) => {
+    const contractorId = props.info;
+    if (!contractorId) return;
+
+    // Запись текущего url в localStorage
+    window.localStorage.setItem(
+      "medpultPathBefore",
+      window.location.pathname + window.location.search
+    );
+    localStorage.setItem("medpultContractorId", contractorId);
+    localStorage.setItem(localStorageDraftKey, JSON.stringify(data));
 
     // Переход
-    const link = await Scripts.getRequestLink();
+    const link = Scripts.getContractorPageCode();
     utils.redirectSPA(link);
   };
 
@@ -119,6 +125,7 @@ export default function SelectRequestList({
       fr: 1,
       isSortable: searchAccess,
       isLink: true,
+      onClick: onClickFullname,
     }),
     new ListColumnData({
       name: data.filters.appealSubject.fieldName,
@@ -126,6 +133,7 @@ export default function SelectRequestList({
       fr: 1,
       isSortable: searchAccess,
       isLink: true,
+      onClick: onClickFullname,
     }),
     new ListColumnData({
       name: data.filters.insuredStatus.fieldName,

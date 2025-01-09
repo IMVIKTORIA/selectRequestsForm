@@ -179,6 +179,10 @@ function getRequestPagePath(): string {
 function getSelectTaskPageCode(): string {
   return Context.data.select_task_page_code;
 }
+/** Получение кода страницы Контрагента */
+function getContractorPageCode(): string {
+  return Context.data.contractor_page_path;
+}
 
 async function createInteractionByRequestId(
   requestId: string,
@@ -206,6 +210,7 @@ export default {
 
   getRequestPagePath,
   getSelectTaskPageCode,
+  getContractorPageCode,
   createInteractionByRequestId,
   setFilterRequest,
   setRequest,
