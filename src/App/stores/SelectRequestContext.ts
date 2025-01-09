@@ -1,6 +1,12 @@
 import React from "react";
 import { initGlobalContext } from "./GlobalContext";
-import { AppFilter, DateFilter, IFiltersData, ListFilter, StringFilter } from "../../UIKit/Filters/FiltersTypes";
+import {
+  AppFilter,
+  DateFilter,
+  IFiltersData,
+  ListFilter,
+  StringFilter,
+} from "../../UIKit/Filters/FiltersTypes";
 
 /** Данные формы отбора обращения */
 export class SelectRequestData {
@@ -12,6 +18,8 @@ export class SelectRequestData {
   onClickSearch: () => Promise<void>;
   /** Количество отобранных элементов */
   elementsCount: number;
+  /** Идентификаторы выбранных элементов */
+  selectedItemsIds: string[];
 
   constructor() {
     this.filters = new SelectRequestFilters();
@@ -20,6 +28,7 @@ export class SelectRequestData {
       alert("test");
     };
     this.elementsCount = 0;
+    this.selectedItemsIds = [];
   }
 }
 
@@ -93,7 +102,10 @@ export class SelectRequestFilters implements IFiltersData {
     this.status = new ListFilter("status", "статус обращения");
     this.appeal = new StringFilter("appeal", "тема обращения");
     this.channel = new ListFilter("channel", "канал");
-    this.channelManual = new StringFilter("channelManual", "канал(Ручной ввод)");
+    this.channelManual = new StringFilter(
+      "channelManual",
+      "канал(Ручной ввод)"
+    );
     this.createdAt = new DateFilter("createdAt", "дата создания");
     this.contragent = new StringFilter("contragent", "обратившийся");
     this.appealSubject = new StringFilter("appealSubject", "застрахованный");
@@ -117,4 +129,6 @@ export class SelectRequestFilters implements IFiltersData {
   }
 }
 
-export const selectRequestContext = initGlobalContext<SelectRequestData>(new SelectRequestData());
+export const selectRequestContext = initGlobalContext<SelectRequestData>(
+  new SelectRequestData()
+);
