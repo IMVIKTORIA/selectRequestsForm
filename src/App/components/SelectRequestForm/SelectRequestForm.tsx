@@ -25,59 +25,12 @@ export default function SelectRequestForm() {
     try {
       const draftData: SelectRequestData | undefined = getDataFromDraft();
       if (draftData) {
-        filtersData.filters.number = new StringFilter(
-          "number",
-          "номер",
-          draftData.filters.number?.value
-        );
-        filtersData.filters.status = new ListFilter(
-          "status",
-          "статус обращения",
-          draftData.filters.status?.values
-        );
-        filtersData.filters.channel = new ListFilter(
-          "channel",
-          "канал",
-          draftData.filters.channel?.values
-        );
-        filtersData.filters.channelManual = new StringFilter(
-          "channelManual",
-          "канал(Ручной ввод)",
-          draftData.filters.channelManual?.value
-        );
-        filtersData.filters.createdAt = new DateFilter(
-          "createdAt",
-          "дата создания",
-          {
-            valueFrom: draftData.filters.createdAt?.valueFrom,
-            valueTo: draftData.filters.createdAt?.valueTo,
-          }
-        );
-        filtersData.filters.contragent = new StringFilter(
-          "contragent",
-          "обратившийся",
-          draftData.filters.contragent?.value
-        );
-        filtersData.filters.appealSubject = new StringFilter(
-          "appealSubject",
-          "застрахованный",
-          draftData.filters.appealSubject?.value
-        );
-        filtersData.filters.insuredStatus = new ListFilter(
-          "insuredStatus",
-          "Статус 3Л",
-          draftData.filters.insuredStatus?.values
-        );
-        filtersData.filters.policy = new StringFilter(
-          "policy",
-          "полис",
-          draftData.filters.policy?.value
-        );
-        filtersData.filters.product = new StringFilter(
-          "product",
-          "продукт",
-          draftData.filters.product?.value
-        );
+        for(const key of Object.keys(draftData.filters)) {
+          const resetBuffer = filtersData.filters[key].reset;
+          filtersData.filters[key] = draftData.filters[key];
+          filtersData.filters[key].reset = resetBuffer;
+        }
+
         filtersData.filterStates = draftData.filterStates;
       }
     } catch (e) {
@@ -153,8 +106,13 @@ export default function SelectRequestForm() {
 
   // Обработчик изменения размера
   const handleResizeWrapper = () => {
-    const width = contentWrapperRef.current?.getBoundingClientRect().width ?? 0;
+    const element = document.querySelector(".select-request-form__content");
+    const width = element?.getBoundingClientRect().width ?? 0;
     setListWidth(width);
+  };
+
+  const setContentWrapperRef = (element: HTMLDivElement) => {
+    handleResizeWrapper()
   };
 
   return (
@@ -176,7 +134,7 @@ export default function SelectRequestForm() {
             </div>
             <div
               className="select-request-form__content"
-              ref={contentWrapperRef}
+              ref={setContentWrapperRef}
             >
               <div
                 className={`select-request-form__filters${
