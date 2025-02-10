@@ -37,7 +37,7 @@ async function getAppeals(
     channel: new ItemData({ value: "Телефон", info: "test" }),
     createdAt: new ItemDataString("06.12.2023 12:22"),
     contragent: new ItemData({ value: "Иванов Иван Иванович", info: "test" }),
-    appeal: new ItemData({ value: "Тестирование", info: "test" }),
+    appeal: new ItemDataString("Тестирование"),
     appealSubject: new ItemData({
       value: "Петров Петр Петрович",
       info: "test",
@@ -158,6 +158,43 @@ async function OnInit(): Promise<void> {
   await randomDelay();
 }
 
+// При переносе удалить
+declare const Context: any;
+/**
+ * Из оригинальных скриптов
+ */
+/** Получение кода страницы Договор */
+function getTreatyPageCode(): string {
+  return Context.data.insurance_treaty_page_code;
+}
+/** Получение кода страницы Рабочий стол */
+function getWortTablePageCode(): string {
+  return Context.data.worktable_page_code;
+}
+/** Получение кода страницы Обращение */
+function getRequestPagePath(): string {
+  return Context.data.request_page_path;
+}
+/** Получение кода страницы Отбор задач */
+function getSelectTaskPageCode(): string {
+  return Context.data.select_task_page_code;
+}
+/** Получение кода страницы Контрагента */
+function getContractorPageCode(): string {
+  return Context.data.contractor_page_path;
+}
+
+async function createInteractionByRequestId(
+  requestId: string,
+  contractorId: string,
+  phone: string
+): Promise<void> {}
+
+/** Установить обращение в фильтр */
+async function setFilterRequest(requestId: string) {}
+
+async function setRequest(id: string) {}
+
 export default {
   getAppeals,
   getRequestsCount,
@@ -170,4 +207,11 @@ export default {
   getSelectRequestLink,
   getSelectInsuredLink,
   OnInit,
+
+  getRequestPagePath,
+  getSelectTaskPageCode,
+  getContractorPageCode,
+  createInteractionByRequestId,
+  setFilterRequest,
+  setRequest,
 };

@@ -9,6 +9,11 @@ import SelectRequestList from "../SelectRequestList/SelectRequestList";
 import { getDataFromDraft } from "../../shared/utils/utils";
 import Scripts from "../../shared/utils/clientScripts";
 import Loader from "../../../UIKit/Loader/Loader";
+import {
+  DateFilter,
+  StringFilter,
+  ListFilter,
+} from "../../../UIKit/Filters/FiltersTypes";
 
 /** Форма отбора обращений */
 export default function SelectRequestForm() {
@@ -20,7 +25,59 @@ export default function SelectRequestForm() {
     try {
       const draftData: SelectRequestData | undefined = getDataFromDraft();
       if (draftData) {
-        filtersData.filters = draftData.filters;
+        filtersData.filters.number = new StringFilter(
+          "number",
+          "номер",
+          draftData.filters.number?.value
+        );
+        filtersData.filters.status = new ListFilter(
+          "status",
+          "статус обращения",
+          draftData.filters.status?.values
+        );
+        filtersData.filters.channel = new ListFilter(
+          "channel",
+          "канал",
+          draftData.filters.channel?.values
+        );
+        filtersData.filters.channelManual = new StringFilter(
+          "channelManual",
+          "канал(Ручной ввод)",
+          draftData.filters.channelManual?.value
+        );
+        filtersData.filters.createdAt = new DateFilter(
+          "createdAt",
+          "дата создания",
+          {
+            valueFrom: draftData.filters.createdAt?.valueFrom,
+            valueTo: draftData.filters.createdAt?.valueTo,
+          }
+        );
+        filtersData.filters.contragent = new StringFilter(
+          "contragent",
+          "обратившийся",
+          draftData.filters.contragent?.value
+        );
+        filtersData.filters.appealSubject = new StringFilter(
+          "appealSubject",
+          "застрахованный",
+          draftData.filters.appealSubject?.value
+        );
+        filtersData.filters.insuredStatus = new ListFilter(
+          "insuredStatus",
+          "Статус 3Л",
+          draftData.filters.insuredStatus?.values
+        );
+        filtersData.filters.policy = new StringFilter(
+          "policy",
+          "полис",
+          draftData.filters.policy?.value
+        );
+        filtersData.filters.product = new StringFilter(
+          "product",
+          "продукт",
+          draftData.filters.product?.value
+        );
         filtersData.filterStates = draftData.filterStates;
       }
     } catch (e) {
@@ -130,7 +187,11 @@ export default function SelectRequestForm() {
               </div>
               <div className="select-request-form__list">
                 <div>
-                  <SelectRequestList width={listWidth} />
+                  <SelectRequestList
+                    width={listWidth}
+                    isMultipleSelect={isMultipleSelect}
+                    isSelectable={isSelectable}
+                  />
                 </div>
               </div>
             </div>
