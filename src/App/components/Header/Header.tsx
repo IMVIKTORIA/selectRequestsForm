@@ -32,7 +32,7 @@ function Header({
 
     // Строковый поиск
     if (data.filters.number.value) return true;
-    if (data.filters.channelManual.value) return true;
+    //if (data.filters.channelManual.value) return true;
     if (data.filters.contragent.value) return true;
     if (data.filters.appeal.value) return true;
     if (data.filters.appealSubject.value) return true;

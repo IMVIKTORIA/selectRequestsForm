@@ -43,7 +43,7 @@ export class SelectRequestFiltersStates {
   /** Канал */
   channel: boolean;
   /** Канал(Ручной ввод) */
-  channelManual: boolean;
+  //channelManual: boolean;
   /** Дата создания */
   createdAt: boolean;
   /** Обратившийся */
@@ -62,7 +62,7 @@ export class SelectRequestFiltersStates {
     this.status = false;
     this.appeal = false;
     this.channel = false;
-    this.channelManual = false;
+    //this.channelManual = false;
     this.createdAt = false;
     this.contragent = false;
     this.appealSubject = false;
@@ -83,7 +83,7 @@ export class SelectRequestFilters implements IFiltersData {
   /** Канал */
   channel: ListFilter;
   /** Канал(Ручной ввод) */
-  channelManual: StringFilter;
+  //channelManual: StringFilter;
   /** Дата создания */
   createdAt: DateFilter;
   /** Обратившийся */
@@ -102,10 +102,7 @@ export class SelectRequestFilters implements IFiltersData {
     this.status = new ListFilter("status", "статус обращения");
     this.appeal = new StringFilter("appeal", "тема обращения");
     this.channel = new ListFilter("channel", "канал");
-    this.channelManual = new StringFilter(
-      "channelManual",
-      "канал(Ручной ввод)"
-    );
+    //this.channelManual = new StringFilter("channelManual","канал(Ручной ввод)");
     this.createdAt = new DateFilter("createdAt", "дата создания");
     this.contragent = new StringFilter("contragent", "обратившийся");
     this.appealSubject = new StringFilter("appealSubject", "застрахованный");
@@ -119,7 +116,7 @@ export class SelectRequestFilters implements IFiltersData {
     this.status.reset();
     this.appeal.reset();
     this.channel.reset();
-    this.channelManual.reset();
+    //this.channelManual.reset();
     this.createdAt.reset();
     this.contragent.reset();
     this.appealSubject.reset();
