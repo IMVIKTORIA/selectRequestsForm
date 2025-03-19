@@ -1,4 +1,7 @@
-import { ItemData, ItemDataString } from "../../UIKit/CustomList/CustomListTypes";
+import {
+  ItemData,
+  ItemDataString,
+} from "../../UIKit/CustomList/CustomListTypes";
 
 export interface IInputData<DataType = any> {
   value: string;
@@ -15,7 +18,7 @@ export class SelectRequestData {
   /** Канал */
   channel?: ItemData;
   /** Канал(Ручной ввод) */
-  channelManual?: ItemData;
+  //channelManual?: ItemData;
   /** Дата создания */
   createdAt?: ItemDataString;
   /** Обратившийся */
@@ -33,7 +36,7 @@ export class SelectRequestData {
     number,
     status,
     channel,
-    channelManual,
+    //channelManual,
     createdAt,
     contragent,
     appeal,
@@ -45,7 +48,7 @@ export class SelectRequestData {
     this.number = number;
     this.status = status;
     this.channel = channel;
-    this.channelManual = channelManual;
+    //this.channelManual = channelManual;
     this.createdAt = createdAt;
     this.contragent = contragent;
     this.appeal = appeal;
