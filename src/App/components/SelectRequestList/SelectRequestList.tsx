@@ -35,11 +35,11 @@ export default function SelectRequestList({
     console.log("setSearchHandler");
     setValue("onClickSearch", callback);
   };
-
-  /** Обработчик нажатия на номер обращения */
-  const onClickAppealNumber = async (props: ItemData) => {
-    const taskId = props.info;
-    if (!taskId) return;
+  
+	/** Обработчик нажатия на номер обращения */
+	const onClickAppealNumber = async (props: ItemData) => {
+		const requestId = props.info
+		if (!requestId) return
 
     // Запись текущего url в localStorage
     window.localStorage.setItem(
@@ -47,13 +47,19 @@ export default function SelectRequestList({
       window.location.pathname + window.location.search
     );
 
-    localStorage.setItem("currentRequestId", taskId);
+    // Сохранить состояние формы
     localStorage.setItem(localStorageDraftKey, JSON.stringify(data));
+    
+		// Установка обращения
+		utils.setRequest(requestId)
+    
+		// Переход
+		const link = Scripts.getRequestPagePath()
 
-    // Переход
-    const link = Scripts.getRequestPagePath();
-    utils.redirectSPA(link);
-  };
+		const redirectUrl = new URL(window.location.origin + "/" + link);
+		if(requestId) redirectUrl.searchParams.set("request_id", requestId);
+		utils.redirectSPA(redirectUrl.toString());
+	}
 
   /** Обработчик нажатия на номер задачи */
   const onClickFullname = async (props: ItemData) => {
