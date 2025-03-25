@@ -5,6 +5,7 @@ import { selectRequestContext } from "../../stores/SelectRequestContext";
 import Button from "../../../UIKit/Button/Button";
 import Scripts from "../../shared/utils/clientScripts";
 import { redirectSPA } from "../../shared/utils/utils";
+import { checkHasFilters } from "../../../UIKit/shared/utils/utils";
 
 interface HeaderProps {
   /** Заголовок */
@@ -25,25 +26,7 @@ function Header({
   const { data, setValue } = selectRequestContext.useContext();
   /** Проверка имеются ли активные фильтры */
   const checkHasActiveFilters = (): boolean => {
-    // Поиск по категориям
-    if (data.filters.status.values.length) return true;
-    if (data.filters.channel.values.length) return true;
-    if (data.filters.insuredStatus.values.length) return true;
-
-    // Строковый поиск
-    if (data.filters.number.value) return true;
-    //if (data.filters.channelManual.value) return true;
-    if (data.filters.contragent.value) return true;
-    if (data.filters.appeal.value) return true;
-    if (data.filters.appealSubject.value) return true;
-    if (data.filters.policy.value) return true;
-    if (data.filters.product.value) return true;
-
-    // Поиск по датам
-    if (data.filters.createdAt.valueFrom || data.filters.createdAt.valueTo)
-      return true;
-
-    return false;
+    return checkHasFilters(data.filters);
   };
 
   const [isShowIndicator, setIsShowIndicator] = useState<boolean>(
