@@ -35,6 +35,11 @@ export default function SelectRequestList({
     console.log("setSearchHandler");
     setValue("onClickSearch", callback);
   };
+
+  /** Присвоить выбранные элементы */
+  const setSelectedItems = (ids: string[]) => {
+    setValue("selectedItemsIds", ids);
+  };
   
 	/** Обработчик нажатия на номер обращения */
 	const onClickAppealNumber = async (props: ItemData) => {
@@ -172,6 +177,7 @@ export default function SelectRequestList({
         listWidth={width}
         isSelectable={isSelectable}
         isMultipleSelect={isMultipleSelect}
+        setSelectedItems={setSelectedItems}
       />
     </div>
   );

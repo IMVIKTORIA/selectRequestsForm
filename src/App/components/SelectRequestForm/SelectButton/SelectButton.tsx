@@ -11,7 +11,7 @@ export default function SelectButton({}: SelectButtonProps) {
   const { data, setValue } = selectRequestContext.useContext();
 
   // Обработка создания взаимодействия
-  const handleCreateInteraction = async (id) => {
+  const handleCreateInteraction = async (id: string) => {
     const phone = localStorage.getItem("medpult-call-phone");
     const contractorId = localStorage.getItem("medpult-call-contractor");
 
@@ -34,7 +34,7 @@ export default function SelectButton({}: SelectButtonProps) {
   };
 
   // Обработка записи обращения в фильтр
-  const handleAddFilter = async (id) => {
+  const handleAddFilter = async (id: string) => {
     const fieldId = new URLSearchParams(window.location.search).get("field_id");
     if (fieldId == undefined) return false;
     if (fieldId != "select-task-request") return false;

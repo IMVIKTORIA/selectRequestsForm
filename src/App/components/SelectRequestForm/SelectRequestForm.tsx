@@ -14,6 +14,7 @@ import {
   StringFilter,
   ListFilter,
 } from "../../../UIKit/Filters/FiltersTypes";
+import SelectButton from "./SelectButton/SelectButton";
 
 /** Форма отбора обращений */
 export default function SelectRequestForm() {
@@ -44,10 +45,9 @@ export default function SelectRequestForm() {
   // Инициализация с параметрами
   const initializeWithParams = (filtersData: SelectRequestData) => {
     // Поиск по ФИО
-    const fieldId = new URLSearchParams(window.location.search).get("field_id");
-    const fullname = new URLSearchParams(window.location.search).get(
-      "fullname"
-    );
+    const fieldId = new URLSearchParams(window.location.search).get("field_id");  
+    const phone = localStorage.getItem("medpult-call-phone");
+    const contractorId = localStorage.getItem("medpult-call-contractor");
 
     // Множественный выбор
     const selectMultiple = new URLSearchParams(window.location.search).get(
@@ -57,13 +57,8 @@ export default function SelectRequestForm() {
       setIsMultipleSelect(true);
     }
 
-    if (fieldId != undefined) {
+    if (fieldId != undefined || phone || contractorId) {
       setIsSelectable(true);
-
-      if (fullname) {
-        filtersData.filters.number.value = fullname;
-        filtersData.filterStates.number = true;
-      }
     }
   };
 
@@ -129,8 +124,9 @@ export default function SelectRequestForm() {
               <Header
                 clickFilterHandler={toggleShowFilters}
                 elementsCount={data.elementsCount}
-                title="Форма отбора обращений"
-              />
+                title="Форма отбора обращений">
+                  <SelectButton />
+              </Header>
             </div>
             <div
               className="select-request-form__content"
