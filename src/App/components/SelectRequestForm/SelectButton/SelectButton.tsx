@@ -2,7 +2,7 @@ import React from "react";
 import Scripts from "../../../shared/utils/clientScripts";
 import { selectRequestContext } from "../../../stores/SelectRequestContext";
 import Button from "../../../../UIKit/Button/Button";
-import { redirectSPA } from "../../../shared/utils/utils";
+import { redirectRequest, redirectSPA } from "../../../shared/utils/utils";
 
 interface SelectButtonProps {}
 
@@ -24,9 +24,9 @@ export default function SelectButton({}: SelectButtonProps) {
 
     if (phone && contractorId) {
       await Scripts.createInteractionByRequestId(id, contractorId, phone);
-      localStorage.removeItem("medpult-draft");
-      const request_page_path = Scripts.getRequestPagePath();
-      redirectSPA(request_page_path);
+      
+      // Переход на обращение
+      redirectRequest(id)
     } else {
       return false;
     }

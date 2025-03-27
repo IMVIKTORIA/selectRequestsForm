@@ -10,7 +10,7 @@ import {
   selectRequestContext,
 } from "../../stores/SelectRequestContext";
 import { SelectRequestData } from "../../shared/types";
-import utils from "../../shared/utils/utils";
+import utils, { redirectRequest } from "../../shared/utils/utils";
 import { localStorageDraftKey } from "../../shared/utils/constants";
 
 interface SelectRequestListProps {
@@ -55,15 +55,8 @@ export default function SelectRequestList({
     // Сохранить состояние формы
     localStorage.setItem(localStorageDraftKey, JSON.stringify(data));
     
-		// Установка обращения
-		utils.setRequest(requestId)
-    
-		// Переход
-		const link = Scripts.getRequestPagePath()
-
-		const redirectUrl = new URL(window.location.origin + "/" + link);
-		if(requestId) redirectUrl.searchParams.set("request_id", requestId);
-		utils.redirectSPA(redirectUrl.toString());
+    // Переход на обращение
+    redirectRequest(requestId)
 	}
 
   /** Обработчик нажатия на номер задачи */

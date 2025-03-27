@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { localStorageDraftKey } from './constants'
+import Scripts from './clientScripts'
 
 /** Маршрутизация по SPA */
 export const redirectSPA = (href: string) => {
@@ -14,10 +15,21 @@ export const redirectSPA = (href: string) => {
 /** Запись идентификатора обращения в localStorage
  * @param id Идентификатор обращения
  */
-async function setRequest(id: string) {
+function setRequest(id: string) {
 	localStorage.setItem('currentRequestId', id)
 	localStorage.setItem('currentContractorId', '')
 	localStorage.setItem('currentContractorPhone', '')
+}
+
+/** Переход на страницу обращения по id */
+export function redirectRequest(requestId: string) {
+	setRequest(requestId);
+	// Переход
+	const link = Scripts.getRequestPagePath()
+
+	const redirectUrl = new URL(window.location.origin + "/" + link);
+	if(requestId) redirectUrl.searchParams.set("request_id", requestId);
+	redirectSPA(redirectUrl.toString());
 }
 
 /** Получение данных формы из черновика */
@@ -82,4 +94,5 @@ export default {
 	setRequest,
 	getDataFromDraft,
 	saveState,
+	redirectRequest
 }
