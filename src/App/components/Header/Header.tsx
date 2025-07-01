@@ -49,12 +49,19 @@ function Header({
   );
 
   const onClickCreateAppeal = () => {
+    if(getCreateRequestButtonAccess() < 2) return;
+    
     // Очистить  в localStorage
     window.localStorage.removeItem("medpult-draft");
 
     const request_page_path = Scripts.getRequestPagePath();
     redirectSPA(request_page_path + "?mode=create");
   };
+
+  const getCreateRequestButtonAccess = () => {
+    const accessSettings = Scripts.getSelectRequestAccessSettings()
+    return accessSettings.createRequestButton;
+  }
 
   return (
     <div className="header">
@@ -72,7 +79,7 @@ function Header({
         Отобрано: <span>{elementsCount}</span>
       </div>
       <div className="header__buttons">{children}</div>
-      <Button title={"создать обращение"} clickHandler={onClickCreateAppeal} />
+      <Button title={"создать обращение"} clickHandler={onClickCreateAppeal} disabled={getCreateRequestButtonAccess() < 2}/>
     </div>
   );
 }
